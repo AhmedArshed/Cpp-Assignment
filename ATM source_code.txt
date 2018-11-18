@@ -1,0 +1,423 @@
+#include<iostream>
+#include<string>
+#include<fstream>
+#include<windows.h>
+#include<iomanip>
+using namespace std;
+void welcome();
+class atm
+{
+	string first_name;
+	string last_name;
+	long int account;
+	int pin;
+	double cash;
+public:
+	atm()
+	{
+		first_name = "";
+		last_name = "";
+		pin = 0;
+		cash = 0.0;
+		account = 0;
+	}
+	~atm()
+	{
+		cout << "\t\t\tALLAH HAFIZ" << endl << endl;
+	}
+	void get(string f_n, string l_n, long int a, int p, double c)
+	{
+		first_name = f_n;
+		last_name = l_n;
+		account = a;
+		pin = p;
+		cash = c;
+	}
+	string getfirstname()
+	{
+		return first_name;
+	}
+	string getlastname()
+	{
+		return last_name;
+	}
+	int getpin()
+	{
+		return pin;
+	}
+	double getcash()
+	{
+		return cash;
+	}
+	long int getaccount()
+	{
+		return account;
+	}
+	double setwithdraw()                //wd is withdraw amount
+	{
+		double wd;
+		cout << "\t\tenter amount" << endl << "OR  Enter 1 to go back to main menu" << endl;
+		cin >> wd;
+		if (wd == 1)
+		{
+			return cash;
+		}
+		while (cash < wd)
+
+		{
+			cout << "\t\t you have less amount in your account " << endl;
+			cout << "\t\t try again with valid amount" << endl << "OR  Enter 1 to go back to main menu" << endl;
+			cin >> wd;
+			if (wd == 1)
+			{
+				return cash;
+			}
+			system("cls");
+		}
+		cash -= wd;
+		cout << "LOADING!";
+		for (int i = 0; i < 5; i++)
+		{
+			Sleep(1000);
+			cout << ".";
+		}
+		cout << "\t\t\t succesful transection" << endl << endl;
+		return cash;
+	}
+	bool login(long int tempid, int temppin)
+	{
+		if (account == tempid&&pin == temppin)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	void changepin()                      //p is temp pin
+	{
+	again_back:
+		int p;
+		int old_pin;
+		cout << "\t\t\t Enter your old pin" << endl;
+		cin >> old_pin;
+		if (old_pin == pin)
+		{
+
+			cout << endl << endl << endl;
+			cout << "\t\t\t enter 4 digit pin code" << endl;
+			cin >> p;
+
+			while (p < 999 || p>10000)                 // 4 digit condition
+			{
+				cout << "/t/t you enter invalid pin" << endl;
+				cout << "/t/t enter valid pin again " << endl;
+				cin >> p;
+				system("cls");
+			}
+		}
+		else
+		{
+			system("cls");
+			cout << "\t\t\tinvalid pin" << endl;
+			Sleep(1000);
+			system("cls");
+			goto again_back;
+		}
+		pin = p;
+		update();
+	}
+	double deposit()                  //dp is deposit amount
+	{
+		double dp;
+		cout << "\t\tenter amount" << endl << "OR  Enter 1 to go back to main menu" << endl;
+		cin >> dp;
+		if (dp == 1)
+		{
+			return cash;
+		}
+		else
+		{
+			while (dp <= 500)
+			{
+				cout << "\t\t your deposit amount is very less " << endl << endl;;
+				cout << "\t\t enter more amount about more then 500" << endl << "$";
+				cin >> dp;
+				system("cls");
+			}
+			cash += dp;
+			update();
+			return cash;
+		}
+	}
+	void update()
+	{
+		cout << " %%    %%  %%%%%%%%    %%%%%       %%       %%%%%%%%%  %%%%%%      %%%%%" << endl;
+		cout << " %%    %%  %%    %%  %%   %%      %% %%         %%     %%        %%   %%" << endl;
+		cout << " %%    %%  %%%%%%%%  %%   %%     %%   %%        %%     %%%%%%    %%   %%" << endl;
+		cout << " %%    %%  %%        %%   %%    %%  %% %%       %%     %%        %%   %%" << endl;
+		cout << " %%%%%%%%  %%          %%%%%   %%       %%      %%     %%%%%%      %%%%%" << endl;
+		Sleep(1000);
+	}
+	void show()
+	{
+		string yes;
+		system("cls");
+		system("color 5b");
+		cout << "\t\t\t/////////////////////////////////////////////" << endl;
+		cout << "\t\t\t// Id is:" << account << setw(10) << "                        //" << endl;
+		cout << "\t\t\t// name is:" << first_name << setw(7) << "                  " << last_name << "//" << endl;
+		cout << "\t\t\t// total amount:" << cash << setw(10) << "                    //" << endl;
+		cout << "\t\t\t/////////////////////////////////////////////" << endl << endl;
+		cout << "\t\t\tGoto Back Menu Enter YES or Any Character " << endl;
+		cin >> yes;
+		cout << "Wait!loading";
+		for (int i = 0; i < 5; i++)
+		{
+			Sleep(1000);
+			cout << ".";
+		}
+	}
+};
+int main(int argc, char *argv[])
+{
+	system("color 5c");
+
+
+
+	//CONNDITION WITH ATM AFTER START
+		welcome();
+		system("color 4C");
+		atm object;
+		string firstname;
+		string lastname;
+		long int id, tempid; //id is basically account
+		int pin, temppin;
+		int count = 0, temp;//counter checker
+		double cash;
+		long int temp1;
+		ifstream in;
+		ofstream out;
+
+
+		//cout << "\t\tWelcome to fast bank yo.\t\t" << endl<<endl<<endl;
+		system("cls");
+		cout << endl << endl;
+		cout << "\t\t\tLog in to your Account here\t\t" << endl;
+		cout << "\t\t\tEnter your id" << endl;
+		cout << "                       ";
+		cin >> tempid;
+		system("cls");
+		cout << "Wait!loading";
+		for (int i = 0; i < 5; i++)
+		{
+			Sleep(1000);
+			cout << ".";
+		}
+		system("cls");
+	there:
+		in.open("database.txt", ios::in);              //open for read
+		while (!in.eof())
+		{
+			in >> firstname >> lastname >> id >> pin >> cash;
+
+			if (tempid == id)
+			{
+				count++;
+				system("color 4C");
+				cout << endl << endl;
+				cout << "\t\t\tEnter pin " << endl;
+				cin >> temppin;
+				system("cls");
+				cout << "Wait!loading";
+				for (int i = 0; i < 5; i++)
+				{
+					Sleep(1000);
+					cout << ".";
+				}
+				system("cls");
+			here:	if (temppin == pin)
+			{
+				object.get(firstname, lastname, id, pin, cash);
+				system("cls");
+				break;
+			}
+					else
+					{
+						system("color 9B");
+						cout << "\t You enter wrong pin" << endl;
+						cout << "\t Enter pin again" << endl;
+						cout << "\t Exit press 1 " << endl;
+						cin >> temp;
+						system("cls");
+						cout << "Wait!loading";
+						for (int i = 0; i < 5; i++)
+						{
+							Sleep(1000);
+							cout << ".";
+						}
+						system("cls");
+						switch (temp)
+						{
+						case 1:
+							system("cls");
+							cout << "thank you" << endl;
+							break;
+
+						}
+						temppin = temp;
+						goto here;
+						system("cls");
+					}
+
+			}
+
+		}
+		in.close();
+		if (count == 0)                  //run if id is not correct
+		{
+			system("cls");
+			system("color 9B");
+			cout << "\t\tyou enter invalid id" << endl << endl;
+			cout << "\t\tenter pin again" << endl << endl;
+			cout << "\t\texit press 1 " << endl << endl;
+			cin >> temp1;
+			system("cls");
+			cout << "Wait!loading";
+			for (int i = 0; i < 5; i++)
+			{
+				Sleep(1000);
+				cout << ".";
+			}
+			system("cls");
+			switch (temp1)
+			{
+			case 1:
+				cout << "\t\tThanks" << endl;
+				system("cls");
+				goto exit;
+				break;
+			}
+			tempid = temp1;
+			system("cls");
+			goto there;
+		}
+		//	quit:
+		//Sleep(1000);
+		while (count == 1)
+		{
+			system("color 2E");
+			cout << "\t1)\t\t View Account Info" << endl << endl;;
+			cout << "\t2)\t\t Withdraw" << endl << endl;
+			cout << "\t3)\t\t Deposit" << endl << endl;
+			cout << "\t4)\t\t Change Pin" << endl << endl;
+			cout << "\t5)\t\t Quit" << endl << endl;
+			cin >> temp;
+			cout << "\tWait!checking";
+			for (int i = 0; i < 5; i++)
+			{
+				Sleep(1000);
+				cout << ".";
+			}
+			system("cls");
+
+			switch (temp)
+			{
+			case 1:
+				object.show();
+				system("cls");
+				break;
+			case 2:
+				object.setwithdraw();
+				system("cls");
+				break;
+			case 3:
+				object.deposit();
+				system("cls");
+				break;
+			case 4:
+				object.changepin();
+				system("cls");
+				break;
+			case 5:
+				count = 0;
+				//goto quit;
+				break;
+			}
+		}
+	exit:
+		//get index from file 
+		int index = 0;
+		in.open("database.txt", ios::in);
+		while (!in.eof())
+		{
+			string data;
+			getline(in, data);
+			index++;
+		}
+		in.close();
+		//update data portion
+		//taking array size from file using dynamic array
+		long long int *idp;
+		string *fname;
+		string *lname;
+		int *p;
+		double *cashp;
+		//creating dynamic array
+		fname = new string[index];
+		lname = new string[index];
+		p = new int[index];
+		cashp = new double[index];
+		idp = new long long int[index];
+		//get all data from file 
+		in.open("database.txt");
+		index = 0;
+		while (!in.eof())
+		{
+			in >> fname[index] >> lname[index] >> idp[index] >> p[index] >> cashp[index];
+			if (idp[index] == object.getaccount() && fname[index] == object.getfirstname())   //for finding specific data
+			{
+				cashp[index] = object.getcash();
+				p[index] = object.getpin();
+			}
+			index++;
+		}
+		in.close();
+		//writing updated data
+		out.open("database.txt");
+		for (int index1 = 0; index1 < index - 1; index1++)
+		{
+			out << setw(10) << fname[index1] << setw(10) << "\t\t\t" << setw(10) << lname[index1] << "\t\t\t" << setw(10) << idp[index1] << "\t\t\t" << setw(10) << p[index1];
+			out << "\t\t\t" << setw(10) << cashp[index1] << "\n";
+		}
+		out.close();
+
+		
+
+
+	}
+	
+	
+
+void welcome()
+{
+	//clrscr();
+	system("color 9F");
+	cout << "\t%%      %%      ";
+	cout << "\n\t%%      %% %%%%%%% %%      %%%%%%  %%%%%% %%%%  %%%% %%%%%%%";
+	cout << "\n\t%%      %% %%      %%      %%      %%  %% %%  %%% %% %%       ";
+	cout << "\n\t%%  %%  %% %%%%%   %%      %%      %%  %% %%  %%% %% %%%%%      ";
+	cout << "\n\t%%  %%  %% %%      %%      %%      %%  %% %%      %% %%           ";
+	cout << "\n\t%%%%%%%%%% %%%%%%% %%%%%%% %%%%%%% %%%%%% %%      %% %%%%%%%     ";
+	cout << "\n\n\t\t\t        $$$$$$$$  $$$$$        ";
+	cout << "\n\t\t\t           $$     $   $      ";
+	cout << "\n\t\t\t           $$     $$$$$    ";
+
+	cout << "\n\n\n\tFAST_NUCES  (********  ATM-MACHINE  *******)";
+
+	cout << " \n\n\n\t\t     press any number and 'ENTER' to continue: ";
+	Sleep(1000);
+}
+
+
